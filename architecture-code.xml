@@ -1,0 +1,277 @@
+<mxGraphModel dx="0" dy="0" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1450" pageHeight="540" math="0" shadow="0">
+  <root>
+    <mxCell id="0"/>
+    <mxCell id="1" parent="0"/>
+
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- TITLE BAR                                               -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <mxCell id="20" value="&lt;font style=&quot;font-size:13px;letter-spacing:1px;&quot;&gt;Deeply-Fused Multi-Modal Co-Attention System for Alzheimer&amp;rsquo;s Detection from Speech&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#37474F;gradientColor=#263238;strokeColor=#1B2631;fontColor=#ECEFF1;shadow=1;arcSize=6;fontSize=13;fontFamily=Helvetica;fontStyle=1;spacingTop=2;spacingBottom=2;gradientDirection=south;" vertex="1" parent="1">
+      <mxGeometry x="30" y="10" width="1180" height="30" as="geometry"/>
+    </mxCell>
+
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- SECTION HEADERS                                         -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <mxCell id="21" value="INPUT" style="text;html=1;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=9;fontStyle=1;fontColor=#90A4AE;labelBackgroundColor=none;spacingTop=0;" vertex="1" parent="1">
+      <mxGeometry x="65" y="48" width="60" height="18" as="geometry"/>
+    </mxCell>
+    <mxCell id="22" value="ENCODING" style="text;html=1;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=9;fontStyle=1;fontColor=#90A4AE;labelBackgroundColor=none;" vertex="1" parent="1">
+      <mxGeometry x="260" y="48" width="75" height="18" as="geometry"/>
+    </mxCell>
+    <mxCell id="23" value="ENHANCEMENT" style="text;html=1;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=9;fontStyle=1;fontColor=#90A4AE;labelBackgroundColor=none;" vertex="1" parent="1">
+      <mxGeometry x="455" y="48" width="100" height="18" as="geometry"/>
+    </mxCell>
+    <mxCell id="24" value="CO-ATTENTION FUSION" style="text;html=1;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=9;fontStyle=1;fontColor=#90A4AE;labelBackgroundColor=none;" vertex="1" parent="1">
+      <mxGeometry x="650" y="48" width="130" height="18" as="geometry"/>
+    </mxCell>
+    <mxCell id="25" value="AGGREGATION" style="text;html=1;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=9;fontStyle=1;fontColor=#90A4AE;labelBackgroundColor=none;" vertex="1" parent="1">
+      <mxGeometry x="878" y="48" width="95" height="18" as="geometry"/>
+    </mxCell>
+    <mxCell id="26" value="OUTPUT" style="text;html=1;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=9;fontStyle=1;fontColor=#90A4AE;labelBackgroundColor=none;" vertex="1" parent="1">
+      <mxGeometry x="1095" y="48" width="55" height="18" as="geometry"/>
+    </mxCell>
+
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- COLUMN 1 — INPUTS                                       -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+
+    <!-- Speech Audio Input -->
+    <mxCell id="2" value="&lt;b&gt;Speech Audio&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:8px&quot;&gt;16kHz · mono · 12s max&lt;br&gt;[batch, samples]&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=12;fillColor=#E8F5E9;gradientColor=#C8E6C9;strokeColor=#66BB6A;fontColor=#2E7D32;fontSize=10;fontFamily=Helvetica;gradientDirection=south;strokeWidth=1.5;" vertex="1" parent="1">
+      <mxGeometry x="35" y="78" width="135" height="58" as="geometry"/>
+    </mxCell>
+
+    <!-- Prosodic Features Input -->
+    <mxCell id="3" value="&lt;b&gt;Prosodic&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:8px&quot;&gt;pitch · jitter · energy&lt;br&gt;spectral centroid (6)&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=12;fillColor=#FFF3E0;gradientColor=#FFE0B2;strokeColor=#FFA726;fontColor=#E65100;fontSize=10;fontFamily=Helvetica;gradientDirection=south;strokeWidth=1.5;" vertex="1" parent="1">
+      <mxGeometry x="35" y="166" width="135" height="52" as="geometry"/>
+    </mxCell>
+
+    <!-- Text Transcript Input -->
+    <mxCell id="4" value="&lt;b&gt;Transcript&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:8px&quot;&gt;CHAT format · 128 tokens&lt;br&gt;participant speech&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=12;fillColor=#E3F2FD;gradientColor=#BBDEFB;strokeColor=#42A5F5;fontColor=#1565C0;fontSize=10;fontFamily=Helvetica;gradientDirection=south;strokeWidth=1.5;" vertex="1" parent="1">
+      <mxGeometry x="35" y="260" width="135" height="58" as="geometry"/>
+    </mxCell>
+
+    <!-- Paralinguistic Features Input -->
+    <mxCell id="5" value="&lt;b&gt;Paralinguistic&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:8px&quot;&gt;speech rate · TTR&lt;br&gt;pause rate · avg sent len (4)&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=12;fillColor=#FFF3E0;gradientColor=#FFE0B2;strokeColor=#FFA726;fontColor=#E65100;fontSize=10;fontFamily=Helvetica;gradientDirection=south;strokeWidth=1.5;" vertex="1" parent="1">
+      <mxGeometry x="35" y="348" width="135" height="52" as="geometry"/>
+    </mxCell>
+
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- COLUMN 2 — ENCODERS                                     -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+
+    <!-- Wav2Vec2 Encoder -->
+    <mxCell id="6" value="&lt;b&gt;Wav2Vec2&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:8px&quot;&gt;wav2vec2-base-960h&lt;br&gt;768-d · 12 layers · frozen&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=10;fillColor=#C8E6C9;gradientColor=#A5D6A7;strokeColor=#43A047;fontColor=#1B5E20;fontSize=10;fontFamily=Helvetica;gradientDirection=south;strokeWidth=1.5;" vertex="1" parent="1">
+      <mxGeometry x="225" y="73" width="148" height="68" as="geometry"/>
+    </mxCell>
+
+    <!-- Prosodic Normalization -->
+    <mxCell id="7" value="&lt;b&gt;Clip + Normalize&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:7px&quot;&gt;factors: [150, 50, 1, 0.5, 0.2, 2000]&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=10;fillColor=#FFE0B2;gradientColor=#FFCC80;strokeColor=#FB8C00;fontColor=#E65100;fontSize=10;fontFamily=Helvetica;gradientDirection=south;strokeWidth=1.5;" vertex="1" parent="1">
+      <mxGeometry x="225" y="170" width="148" height="44" as="geometry"/>
+    </mxCell>
+
+    <!-- BERT Encoder -->
+    <mxCell id="8" value="&lt;b&gt;BERT&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:8px&quot;&gt;bert-base-uncased&lt;br&gt;768-d · 12 layers · frozen&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=10;fillColor=#BBDEFB;gradientColor=#90CAF9;strokeColor=#1E88E5;fontColor=#0D47A1;fontSize=10;fontFamily=Helvetica;gradientDirection=south;strokeWidth=1.5;" vertex="1" parent="1">
+      <mxGeometry x="225" y="255" width="148" height="68" as="geometry"/>
+    </mxCell>
+
+    <!-- Paralinguistic Normalization -->
+    <mxCell id="9" value="&lt;b&gt;Clip + Normalize&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:7px&quot;&gt;factors: [120, 1, 1, 20]&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=10;fillColor=#FFE0B2;gradientColor=#FFCC80;strokeColor=#FB8C00;fontColor=#E65100;fontSize=10;fontFamily=Helvetica;gradientDirection=south;strokeWidth=1.5;" vertex="1" parent="1">
+      <mxGeometry x="225" y="352" width="148" height="44" as="geometry"/>
+    </mxCell>
+
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- COLUMN 3 — FEATURE ENHANCEMENT                          -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+
+    <!-- Acoustic ⊕ Prosodic Enhancement -->
+    <mxCell id="10" value="&lt;b&gt;Acoustic ⊕ Prosodic&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:8px&quot;&gt;Concat → Linear&lt;br&gt;[B, seq, 768]&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=10;fillColor=#A5D6A7;gradientColor=#81C784;strokeColor=#388E3C;fontColor=#1B5E20;fontSize=10;fontFamily=Helvetica;gradientDirection=south;strokeWidth=1.5;" vertex="1" parent="1">
+      <mxGeometry x="428" y="100" width="155" height="62" as="geometry"/>
+    </mxCell>
+
+    <!-- Linguistic ⊕ Paralinguistic Enhancement -->
+    <mxCell id="11" value="&lt;b&gt;Linguistic ⊕ Paraling.&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:8px&quot;&gt;Concat → Linear&lt;br&gt;[B, seq, 768]&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=10;fillColor=#90CAF9;gradientColor=#64B5F6;strokeColor=#1976D2;fontColor=#0D47A1;fontSize=10;fontFamily=Helvetica;gradientDirection=south;strokeWidth=1.5;" vertex="1" parent="1">
+      <mxGeometry x="428" y="292" width="155" height="62" as="geometry"/>
+    </mxCell>
+
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- COLUMN 4 — CO-ATTENTION FUSION (3D STACKED ×3)          -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+
+    <!-- Back layer (3rd co-attention block) — lightest -->
+    <mxCell id="12" value="" style="rounded=1;whiteSpace=wrap;html=1;shadow=0;arcSize=10;fillColor=#F3E5F5;strokeColor=#CE93D8;strokeWidth=1;opacity=75;gradientDirection=south;" vertex="1" parent="1">
+      <mxGeometry x="655" y="146" width="164" height="190" as="geometry"/>
+    </mxCell>
+
+    <!-- Middle layer (2nd co-attention block) — medium -->
+    <mxCell id="13" value="" style="rounded=1;whiteSpace=wrap;html=1;shadow=0;arcSize=10;fillColor=#E1BEE7;strokeColor=#BA68C8;strokeWidth=1;opacity=85;gradientDirection=south;" vertex="1" parent="1">
+      <mxGeometry x="647" y="138" width="164" height="190" as="geometry"/>
+    </mxCell>
+
+    <!-- Front layer (1st co-attention block) — darkest, with text -->
+    <mxCell id="14" value="&lt;b style=&quot;font-size:12px&quot;&gt;Co-Attention ×3&lt;/b&gt;&lt;br&gt;&lt;hr style=&quot;border:none;border-top:1px solid rgba(255,255,255,0.4);margin:4px 10px;&quot;&gt;&lt;font style=&quot;font-size:8px;line-height:1.5&quot;&gt;Self-Attn · 8 heads · 768-d&lt;br&gt;⇄ Cross-Modal Attention&lt;br&gt;FFN: 768→3072→768&lt;br&gt;GELU + LayerNorm&lt;br&gt;Residual · Dropout 0.15&lt;br&gt;&lt;br&gt;&lt;i&gt;~6M trainable params&lt;/i&gt;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=10;fillColor=#CE93D8;gradientColor=#AB47BC;strokeColor=#7B1FA2;fontColor=#FFFFFF;fontSize=10;fontFamily=Helvetica;gradientDirection=south;strokeWidth=1.5;verticalAlign=middle;" vertex="1" parent="1">
+      <mxGeometry x="639" y="130" width="164" height="190" as="geometry"/>
+    </mxCell>
+
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- COLUMN 5 — AGGREGATION                                  -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+
+    <mxCell id="15" value="&lt;b style=&quot;font-size:11px&quot;&gt;Aggregation&lt;/b&gt;&lt;br&gt;&lt;hr style=&quot;border:none;border-top:1px solid #B0BEC5;margin:4px 10px;&quot;&gt;&lt;font style=&quot;font-size:8px;line-height:1.4&quot;&gt;Acoustic → Mean Pool [768]&lt;br&gt;Linguistic → CLS Token [768]&lt;br&gt;+ Prosodic [6] + Paraling [4]&lt;br&gt;↓&lt;br&gt;&lt;b&gt;Concat [1546]&lt;/b&gt;&lt;br&gt;↓&lt;br&gt;Linear → 768 · ReLU&lt;br&gt;Dropout 0.15&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=10;fillColor=#ECEFF1;gradientColor=#CFD8DC;strokeColor=#78909C;fontColor=#37474F;fontSize=10;fontFamily=Helvetica;gradientDirection=south;strokeWidth=1.5;verticalAlign=middle;" vertex="1" parent="1">
+      <mxGeometry x="860" y="140" width="148" height="185" as="geometry"/>
+    </mxCell>
+
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- COLUMN 6 — CLASSIFICATION OUTPUT                        -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+
+    <!-- Binary Classifier -->
+    <mxCell id="16" value="&lt;b&gt;Classifier&lt;/b&gt;&lt;br&gt;&lt;font style=&quot;font-size:8px&quot;&gt;Linear: 768 → 2&lt;br&gt;Softmax → Probs&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=10;fillColor=#F8BBD0;gradientColor=#F48FB1;strokeColor=#E91E63;fontColor=#880E4F;fontSize=10;fontFamily=Helvetica;gradientDirection=south;strokeWidth=1.5;" vertex="1" parent="1">
+      <mxGeometry x="1065" y="185" width="138" height="62" as="geometry"/>
+    </mxCell>
+
+    <!-- Output Labels -->
+    <mxCell id="17" value="&lt;b&gt;&lt;font color=&quot;#2E7D32&quot;&gt;Control&lt;/font&gt;  &amp;nbsp;|&amp;nbsp;  &lt;font color=&quot;#C62828&quot;&gt;Dementia&lt;/font&gt;&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;shadow=1;arcSize=8;fillColor=#37474F;gradientColor=#263238;strokeColor=#1B2631;fontColor=#FFFFFF;fontSize=11;fontFamily=Helvetica;gradientDirection=south;strokeWidth=1.5;" vertex="1" parent="1">
+      <mxGeometry x="1070" y="272" width="128" height="34" as="geometry"/>
+    </mxCell>
+
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- ANNOTATIONS / METADATA                                  -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+
+    <!-- Preprocessing Annotation -->
+    <mxCell id="27" value="&lt;font style=&quot;font-size:8px&quot;&gt;&lt;b&gt;⚙ Preprocessing:&lt;/b&gt; Audio normalization · NaN sanitization · Center cropping · Clip values · Batch collation&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;shadow=0;arcSize=6;fillColor=#FAFAFA;strokeColor=#E0E0E0;strokeWidth=1;fontColor=#78909C;fontSize=8;fontFamily=Helvetica;dashed=1;dashPattern=4 4;verticalAlign=middle;" vertex="1" parent="1">
+      <mxGeometry x="35" y="432" width="340" height="36" as="geometry"/>
+    </mxCell>
+
+    <!-- Training Annotation -->
+    <mxCell id="28" value="&lt;font style=&quot;font-size:8px&quot;&gt;&lt;b&gt;⚡ Training:&lt;/b&gt; AdamW · LR=2e-5 · WD=1e-4 · Batch=4 · Epochs=50 · AMP (FP16) · Warmup 6% · Early Stop=10 · Grad Clip=1.0&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;shadow=0;arcSize=6;fillColor=#FAFAFA;strokeColor=#E0E0E0;strokeWidth=1;fontColor=#78909C;fontSize=8;fontFamily=Helvetica;dashed=1;dashPattern=4 4;verticalAlign=middle;" vertex="1" parent="1">
+      <mxGeometry x="860" y="432" width="345" height="36" as="geometry"/>
+    </mxCell>
+
+    <!-- Frozen Encoders Note -->
+    <mxCell id="30" value="&lt;font style=&quot;font-size:7px&quot;&gt;❄ ~144M params frozen&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=7;fontColor=#90A4AE;labelBackgroundColor=none;" vertex="1" parent="1">
+      <mxGeometry x="246" y="148" width="105" height="16" as="geometry"/>
+    </mxCell>
+
+    <!-- Color Legend -->
+    <mxCell id="29" value="&lt;font style=&quot;font-size:8px&quot;&gt;&lt;font color=&quot;#43A047&quot;&gt;■&lt;/font&gt; Acoustic &amp;nbsp;&amp;nbsp; &lt;font color=&quot;#1E88E5&quot;&gt;■&lt;/font&gt; Linguistic &amp;nbsp;&amp;nbsp; &lt;font color=&quot;#FB8C00&quot;&gt;■&lt;/font&gt; Engineered &amp;nbsp;&amp;nbsp; &lt;font color=&quot;#8E24AA&quot;&gt;■&lt;/font&gt; Fusion &amp;nbsp;&amp;nbsp; &lt;font color=&quot;#E91E63&quot;&gt;■&lt;/font&gt; Classification&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;shadow=0;arcSize=6;fillColor=#FAFAFA;strokeColor=#E0E0E0;strokeWidth=1;fontColor=#546E7A;fontSize=8;fontFamily=Helvetica;verticalAlign=middle;align=center;" vertex="1" parent="1">
+      <mxGeometry x="420" y="438" width="395" height="24" as="geometry"/>
+    </mxCell>
+
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- CONNECTIONS / ARROWS                                    -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+
+    <!-- Audio Input → Wav2Vec2 -->
+    <mxCell id="40" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#66BB6A;endArrow=blockThin;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" source="2" target="6" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <!-- Prosodic Input → Prosodic Norm -->
+    <mxCell id="41" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#FFA726;endArrow=blockThin;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" source="3" target="7" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <!-- Text Input → BERT -->
+    <mxCell id="42" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#42A5F5;endArrow=blockThin;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" source="4" target="8" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <!-- Paraling Input → Paraling Norm -->
+    <mxCell id="43" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#FFA726;endArrow=blockThin;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" source="5" target="9" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <!-- Wav2Vec2 → Acoustic Enhanced (upper entry) -->
+    <mxCell id="44" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#43A047;endArrow=blockThin;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" edge="1" source="6" target="10" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <!-- Prosodic Norm → Acoustic Enhanced (lower entry) -->
+    <mxCell id="45" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#FB8C00;endArrow=blockThin;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.75;entryDx=0;entryDy=0;" edge="1" source="7" target="10" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <!-- BERT → Linguistic Enhanced (upper entry) -->
+    <mxCell id="46" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#1E88E5;endArrow=blockThin;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" edge="1" source="8" target="11" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <!-- Paraling Norm → Linguistic Enhanced (lower entry) -->
+    <mxCell id="47" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#FB8C00;endArrow=blockThin;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.75;entryDx=0;entryDy=0;" edge="1" source="9" target="11" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <!-- Acoustic Enhanced → Co-Attention (upper entry) -->
+    <mxCell id="48" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2.5;strokeColor=#AB47BC;endArrow=blockThin;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.2;entryDx=0;entryDy=0;" edge="1" source="10" target="14" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <!-- Linguistic Enhanced → Co-Attention (lower entry) -->
+    <mxCell id="49" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2.5;strokeColor=#AB47BC;endArrow=blockThin;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.8;entryDx=0;entryDy=0;" edge="1" source="11" target="14" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <!-- Co-Attention → Aggregation -->
+    <mxCell id="50" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2.5;strokeColor=#78909C;endArrow=blockThin;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" source="14" target="15" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <!-- Aggregation → Classifier -->
+    <mxCell id="51" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2.5;strokeColor=#E91E63;endArrow=blockThin;endFill=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" source="15" target="16" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <!-- Classifier → Output -->
+    <mxCell id="52" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;strokeColor=#546E7A;endArrow=blockThin;endFill=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" source="16" target="17" parent="1">
+      <mxGeometry relative="1" as="geometry"/>
+    </mxCell>
+
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- SKIP CONNECTIONS (dashed) — Raw features to Aggregation -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+
+    <!-- Prosodic Norm → Aggregation (skip connection for raw [6]) -->
+    <mxCell id="53" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;strokeColor=#FB8C00;endArrow=blockThin;endFill=1;dashed=1;dashPattern=6 3;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.75;entryDx=0;entryDy=0;opacity=55;" edge="1" source="7" target="15" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="299" y="420"/>
+          <mxPoint x="840" y="420"/>
+          <mxPoint x="840" y="279"/>
+        </Array>
+      </mxGeometry>
+    </mxCell>
+
+    <!-- Paraling Norm → Aggregation (skip connection for raw [4]) -->
+    <mxCell id="54" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=1.5;strokeColor=#FB8C00;endArrow=blockThin;endFill=1;dashed=1;dashPattern=6 3;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.85;entryDx=0;entryDy=0;opacity=55;" edge="1" source="9" target="15" parent="1">
+      <mxGeometry relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="299" y="410"/>
+          <mxPoint x="835" y="410"/>
+          <mxPoint x="835" y="297"/>
+        </Array>
+      </mxGeometry>
+    </mxCell>
+
+    <!-- ═══════════════════════════════════════════════════════ -->
+    <!-- DIMENSION LABELS ON KEY ARROWS                          -->
+    <!-- ═══════════════════════════════════════════════════════ -->
+
+    <!-- [B, seq, 768] label between Encoding and Enhancement -->
+    <mxCell id="60" value="&lt;font style=&quot;font-size:7px;color:#78909C&quot;&gt;[B, seq, 768]&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;fontFamily=Helvetica;labelBackgroundColor=#FFFFFF;spacingTop=0;spacingBottom=0;" vertex="1" parent="1">
+      <mxGeometry x="378" y="92" width="48" height="14" as="geometry"/>
+    </mxCell>
+
+    <!-- [B, seq, 768] label for linguistic side -->
+    <mxCell id="61" value="&lt;font style=&quot;font-size:7px;color:#78909C&quot;&gt;[B, seq, 768]&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;fontFamily=Helvetica;labelBackgroundColor=#FFFFFF;spacingTop=0;spacingBottom=0;" vertex="1" parent="1">
+      <mxGeometry x="378" y="275" width="48" height="14" as="geometry"/>
+    </mxCell>
+
+    <!-- Loss function label near classifier -->
+    <mxCell id="62" value="&lt;font style=&quot;font-size:7px;color:#90A4AE&quot;&gt;Cross-Entropy&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;fontFamily=Helvetica;labelBackgroundColor=none;spacingTop=0;spacingBottom=0;" vertex="1" parent="1">
+      <mxGeometry x="1080" y="252" width="70" height="14" as="geometry"/>
+    </mxCell>
+
+  </root>
+</mxGraphModel>

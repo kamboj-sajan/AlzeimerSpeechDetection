@@ -1,0 +1,21 @@
+# Python / environments
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+venv/
+.venv/
+
+# Dataset and trained models (DementiaBank data must not be redistributed)
+data/
+models/
+*.pth
+*.npz
+
+# Generated outputs; the current files are from an earlier broken run
+results/
+
+# Local scratch copies
+scripts/yo/
+scripts/test_one.py
+
+.DS_Store
