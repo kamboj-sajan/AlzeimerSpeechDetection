@@ -21,7 +21,8 @@ The pretrained backbones start frozen; the last 4 layers of each are unfrozen fr
 
 - `scriptsUpdates/` — current pipeline
   - `enhanced_config.py` — paths and hyperparameters
-  - `enhanced_preprocess.py` — parses CHAT (`.cha`) transcripts and builds the metadata CSV
+  - `enhanced_preprocess.py` — parses DementiaBank CHAT (`.cha`) transcripts and builds the metadata CSV
+  - `process2_preprocess.py` — builds the metadata CSV for the PROCESS-2 corpus
   - `enhanced_dataset.py` — dataset, audio loading and cached hand-crafted feature extraction
   - `enhanced_model.py` — fusion + co-attention model
   - `enhanced_train.py` — 10-fold cross-validation training
@@ -46,9 +47,24 @@ A CUDA GPU is strongly recommended (e.g. a free Kaggle or Google Colab T4). Trai
 
 ## Data
 
-The data is **not included** in this repository. The pipeline is built for the [DementiaBank](https://talkbank.org/dementia/) Pitt corpus (Cookie Theft picture description), which requires DementiaBank membership. Do not commit or redistribute the data.
+The data is **not included** in this repository. Do not commit or redistribute it. Two corpora are supported:
 
-Expected layout (audio may be `.wav` or `.mp3`; transcripts share the audio file's name):
+### PROCESS-2
+
+[PROCESS-2](https://huggingface.co/datasets/CognoSpeak/PROCESS-2) (gated; request access on Hugging Face) contains English recordings and transcripts from 400 participants (healthy, MCI, dementia) with a predefined train/test split. Download it to `data/process2/` and build the metadata:
+
+```bash
+cd scriptsUpdates
+python process2_preprocess.py                       # Cookie Theft task; healthy vs MCI+dementia
+python process2_preprocess.py --labels dementia     # healthy vs dementia only
+python process2_preprocess.py --tasks CTD PFT SFT   # include the fluency tasks
+```
+
+With `USE_OFFICIAL_SPLIT = True` (default), training uses the dataset's own train/test split.
+
+### DementiaBank Pitt
+
+The [DementiaBank](https://talkbank.org/dementia/) Pitt corpus (Cookie Theft picture description) requires DementiaBank membership. Expected layout (audio may be `.wav` or `.mp3`; transcripts share the audio file's name):
 
 ```
 data/pitt/control/audio/*.wav         data/pitt/control/transcripts/*.cha
@@ -63,14 +79,15 @@ Run the scripts from `scriptsUpdates/` (paths in `enhanced_config.py` are relati
 
 ```bash
 cd scriptsUpdates
-python enhanced_preprocess.py   # writes ../data/metadata.csv
-python enhanced_train.py        # 10-fold CV; writes ../results and ../models
+python enhanced_preprocess.py   # Pitt; or process2_preprocess.py for PROCESS-2
+python enhanced_train.py        # writes ../results and ../models
 python enhanced_results.py      # summary report and plots in ../results
 ```
 
 ### Evaluation protocol
 
-- 10-fold cross-validation; within each fold the remaining data is split 8 : 1 into train and validation.
+- PROCESS-2: the official train/test split, with a validation set held out from the training participants.
+- Otherwise: 10-fold cross-validation; within each fold the remaining data is split 8 : 1 into train and validation.
 - Splits are **stratified** by label and **grouped by speaker**, so recordings from the same participant never appear in both training and test data.
 - Prosodic/paralinguistic features are standardized using statistics from the training split only.
 - The checkpoint with the best validation F1 is evaluated on the held-out test fold.

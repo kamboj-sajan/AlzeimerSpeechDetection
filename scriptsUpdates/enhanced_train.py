@@ -326,18 +326,27 @@ def main():
     labels = full_dataset.labels
     groups = full_dataset.groups
     print(f"Total dataset size: {len(full_dataset)} "
-          f"({len(np.unique(groups))} speakers, {int(labels.sum())} dementia / {int((labels == 0).sum())} control)")
+          f"({len(np.unique(groups))} speakers, {int(labels.sum())} impaired (1) / {int((labels == 0).sum())} control (0))")
 
-    # 10-fold cross-validation setup. Stratified so every split contains both classes (the metadata
-    # CSV lists all controls before all dementia, so unstratified slicing gave all-dementia
-    # validation sets), and grouped so one speaker's recordings never span train and test.
-    outer_cv = StratifiedGroupKFold(n_splits=config.K_FOLDS, shuffle=True, random_state=config.RANDOM_SEED)
     fold_results = []
 
     # Create indices array
     dataset_indices = np.arange(len(full_dataset))
 
-    for fold, (temp_indices, test_indices) in enumerate(outer_cv.split(dataset_indices, labels, groups)):
+    metadata = full_dataset.metadata
+    if config.USE_OFFICIAL_SPLIT and 'split' in metadata.columns:
+        # One run on the dataset's predefined partition (PROCESS-2), comparable with published baselines
+        is_test = metadata['split'].astype(str).str.lower().eq('test').to_numpy()
+        print(f"Using the dataset's official split: {int((~is_test).sum())} train+val, {int(is_test.sum())} test")
+        splits = [(dataset_indices[~is_test], dataset_indices[is_test])]
+    else:
+        # 10-fold cross-validation. Stratified so every split contains both classes (the metadata
+        # CSV lists all controls before all dementia, so unstratified slicing gave all-dementia
+        # validation sets), and grouped so one speaker's recordings never span train and test.
+        outer_cv = StratifiedGroupKFold(n_splits=config.K_FOLDS, shuffle=True, random_state=config.RANDOM_SEED)
+        splits = outer_cv.split(dataset_indices, labels, groups)
+
+    for fold, (temp_indices, test_indices) in enumerate(splits):
         # Split temp_indices into 8 train + 1 validation, also stratified and speaker-grouped
         inner_cv = StratifiedGroupKFold(n_splits=config.K_FOLDS - 1, shuffle=True, random_state=config.RANDOM_SEED)
         inner_train, inner_val = next(inner_cv.split(temp_indices, labels[temp_indices], groups[temp_indices]))
@@ -355,7 +364,7 @@ def main():
     
     # Calculate and display overall results
     print(f"\n{'='*50}")
-    print("10-FOLD CROSS-VALIDATION RESULTS")
+    print("CROSS-VALIDATION RESULTS" if len(fold_results) > 1 else "OFFICIAL TEST SPLIT RESULTS")
     print(f"{'='*50}")
     
     accuracies = [result['test_accuracy'] for result in fold_results]

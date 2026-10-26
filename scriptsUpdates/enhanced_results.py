@@ -291,7 +291,7 @@ ENHANCED DEMENTIA DETECTION SYSTEM - FINAL REPORT
 
 Dataset Information:
 - Total samples processed: {samples}
-- Cross-validation: 10-fold (8 train : 1 validation : 1 test)
+- Evaluation: {"10-fold cross-validation (8 train : 1 validation : 1 test)" if len(results_df) > 1 else "official train/test split (validation held out from train)"}
 
 Model Architecture:
 - Base models: Wav2Vec2 + BERT

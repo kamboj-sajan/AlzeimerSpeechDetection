@@ -2,6 +2,7 @@ import torch
 
 # -- Project Paths --
 DATA_DIR = "../data/pitt"
+PROCESS2_DIR = "../data/process2"
 OUTPUT_CSV_PATH = "../data/metadata.csv"
 MODEL_SAVE_PATH = "../models/best_dementia_model.pth"
 # Cached prosodic/paralinguistic features; delete it if you change preprocessing
@@ -51,6 +52,9 @@ SCHEDULER_WARMUP_RATIO = 0.1  # Fraction of total steps used for warmup
 # -- Cross-validation Parameters --
 K_FOLDS = 10
 RANDOM_SEED = 42
+# If metadata.csv has a 'split' column (PROCESS-2), train once on its train set and report on its
+# test set, which is comparable with published baselines. Set False to run K-fold CV instead.
+USE_OFFICIAL_SPLIT = True
 
 # Validation split within each fold (for 8 train, 1 val, 1 test)
 TRAIN_RATIO = 8/9   # 8 out of 9 remaining folds for training

@@ -29,8 +29,12 @@ class EnhancedDementiaDataset(Dataset):
         if 'label' in self.metadata.columns:
             self.metadata['label'] = self.metadata['label'].astype(int)
         self.labels = self.metadata['label'].to_numpy()
-        # Pitt files are named <participant>-<visit>.wav, so a speaker's recordings share a group
-        self.groups = self.metadata['file_path'].map(lambda p: Path(p).stem.split('-')[0]).to_numpy()
+        # Group a speaker's recordings: PROCESS-2 metadata has participant_id; Pitt files are
+        # named <participant>-<visit>.wav
+        if 'participant_id' in self.metadata.columns:
+            self.groups = self.metadata['participant_id'].astype(str).to_numpy()
+        else:
+            self.groups = self.metadata['file_path'].map(lambda p: Path(p).stem.split('-')[0]).to_numpy()
         self.prosodic, self.paralinguistic = self._load_or_compute_features()
 
     def _load_or_compute_features(self):
