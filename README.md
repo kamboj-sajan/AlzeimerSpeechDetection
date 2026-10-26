@@ -100,7 +100,19 @@ AdamW (1e-5 for the pretrained backbones, 1e-4 for the new layers), cosine sched
 
 ## Results
 
-Results will be added after training on the full dataset.
+**PROCESS-2, official train/test split.** Healthy controls (0) vs. cognitively impaired, MCI or dementia (1); Cookie Theft recordings only; 400 participants (200 / 200). Participants: 284 train, 36 validation, 80 test. Single run (seed 42) on a Kaggle T4. The checkpoint with the best validation F1 (epoch 11; early stopping at epoch 16) was evaluated once on the test set.
+
+| Metric | Test set (80 participants) |
+|---|---|
+| Accuracy | 81.3% |
+| F1 | 0.815 |
+| Precision | 0.805 |
+| Recall | 0.825 |
+| ROC-AUC | 0.919 |
+
+Confusion matrix: 32 true negatives, 8 false positives, 7 false negatives, 33 true positives.
+
+With 80 test participants the 95% confidence interval for accuracy is roughly 71–88%, so differences of a few points between runs are not meaningful. Training accuracy reached ~97% while validation peaked near 80%, so the model overfits after about 10 epochs; early stopping limits this.
 
 ---
 
