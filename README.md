@@ -27,6 +27,8 @@ The pretrained backbones start frozen; the last 4 layers of each are unfrozen fr
   - `enhanced_model.py` — fusion + co-attention model
   - `enhanced_train.py` — 10-fold cross-validation training
   - `enhanced_results.py` — aggregated metrics, confusion matrix and training-curve plots
+  - `summarize_seeds.py` — combines runs with different seeds into mean ± std test metrics and a chart
+- `results/` — per-seed test metrics (`seed_runs/`, `seed_summary.csv`) and charts (`plots/`)
 - `scripts/` — original baseline (Wav2Vec2 + BERT co-attention only, single train/validation split)
 - `architecture.png`, `architecture-code.xml` — architecture diagram (draw.io source)
 
@@ -88,7 +90,7 @@ To measure run-to-run variation, train with several seeds and combine them:
 
 ```bash
 for seed in 42 1 2 3 4; do python enhanced_train.py --seed $seed; done
-python summarize_seeds.py       # per-seed table and mean ± std in ../results/seed_summary.csv
+python summarize_seeds.py       # per-seed table, mean ± std and a chart in ../results
 ```
 
 ### Evaluation protocol
@@ -116,6 +118,11 @@ AdamW (1e-5 for the pretrained backbones, 1e-4 for the new layers), cosine sched
 | Precision | 0.737 ± 0.070 | 0.660–0.814 |
 | Recall | 0.920 ± 0.054 | 0.875–1.000 |
 | ROC-AUC | 0.889 ± 0.016 | 0.862–0.903 |
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="results/plots/seed_metrics_dark.png">
+  <img src="results/plots/seed_metrics.png" width="720" alt="Dot plot of test accuracy, F1, precision, recall and ROC-AUC for each of the 5 seeds, with the mean of each metric marked">
+</picture>
 
 | Seed | Accuracy | F1 | Precision | Recall | ROC-AUC | Best epoch |
 |---|---|---|---|---|---|---|

@@ -1,0 +1,2 @@
+fold,test_accuracy,test_f1,test_loss,best_val_f1,test_precision,test_recall,test_auc,cm_tn,cm_fp,cm_fn,cm_tp,history_path,model_path,best_epoch
+1,0.825,0.8444444444444444,0.479014427959919,0.7142857142857143,0.76,0.95,0.890625,28,12,2,38,../results/histories/fold_1_history.csv,../models/fold_1_best_model.pth,4
