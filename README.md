@@ -84,6 +84,13 @@ python enhanced_train.py        # writes ../results and ../models
 python enhanced_results.py      # summary report and plots in ../results
 ```
 
+To measure run-to-run variation, train with several seeds and combine them:
+
+```bash
+for seed in 42 1 2 3 4; do python enhanced_train.py --seed $seed; done
+python summarize_seeds.py       # per-seed table and mean ± std in ../results/seed_summary.csv
+```
+
 ### Evaluation protocol
 
 - PROCESS-2: the official train/test split, with a validation set held out from the training participants.

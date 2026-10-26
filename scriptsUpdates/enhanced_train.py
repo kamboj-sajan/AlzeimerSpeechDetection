@@ -1,5 +1,6 @@
 # Enhanced train.py with 10-fold cross-validation
 
+import argparse
 import os
 from pathlib import Path
 
@@ -96,7 +97,7 @@ def train_one_epoch(model, dataloader, optimizer, scheduler, criterion, device, 
         labels = batch['label'].to(device)
         
         optimizer.zero_grad(set_to_none=True)
-        with torch.cuda.amp.autocast(enabled=use_amp):
+        with torch.autocast(device_type=device.type, enabled=use_amp):
             logits = model(acoustic_input, linguistic_ids, linguistic_mask, 
                           prosodic_features, paralinguistic_features)
             loss = criterion(logits, labels)
@@ -150,7 +151,7 @@ def evaluate(model, dataloader, criterion, device):
             paralinguistic_features = batch['paralinguistic_features'].to(device)
             labels = batch['label'].to(device)
             
-            with torch.cuda.amp.autocast(enabled=use_amp):
+            with torch.autocast(device_type=device.type, enabled=use_amp):
                 logits = model(acoustic_input, linguistic_ids, linguistic_mask,
                               prosodic_features, paralinguistic_features)
                 loss = criterion(logits, labels)
@@ -219,7 +220,7 @@ def train_fold(fold, train_indices, val_indices, test_indices, full_dataset,
     if config.SCHEDULER_NAME.lower() == "cosine" and total_steps > 0:
         warmup_steps = int(total_steps * config.SCHEDULER_WARMUP_RATIO)
         scheduler = get_cosine_schedule_with_warmup(optimizer, warmup_steps, total_steps)
-    scaler = torch.cuda.amp.GradScaler(enabled=config.USE_AMP and device.type == "cuda")
+    scaler = torch.amp.GradScaler(device.type, enabled=config.USE_AMP and device.type == "cuda")
     
     best_val_f1 = 0
     best_model_state = None
@@ -321,7 +322,7 @@ def main():
     torch.manual_seed(config.RANDOM_SEED)
     np.random.seed(config.RANDOM_SEED)
     device = torch.device(config.DEVICE)
-    print(f"Using device: {device}")
+    print(f"Using device: {device} | seed: {config.RANDOM_SEED}")
     
     # Check if metadata file exists
     if not os.path.exists(config.OUTPUT_CSV_PATH):
@@ -392,6 +393,15 @@ def main():
     os.makedirs(results_path.parent, exist_ok=True)
     results_df.to_csv(results_path, index=False)
     print(f"\nResults saved to {results_path}")
+    # Kept per seed so repeated runs can be combined by summarize_seeds.py
+    seed_path = Path(config.RESULTS_DIR) / "seed_runs" / f"seed_{config.RANDOM_SEED}.csv"
+    os.makedirs(seed_path.parent, exist_ok=True)
+    results_df.to_csv(seed_path, index=False)
+    print(f"Results for seed {config.RANDOM_SEED} saved to {seed_path}")
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Train and evaluate the co-attention model.")
+    parser.add_argument("--seed", type=int, default=config.RANDOM_SEED,
+                        help="random seed for weight init, shuffling and the train/validation split")
+    config.RANDOM_SEED = parser.parse_args().seed
     main()
