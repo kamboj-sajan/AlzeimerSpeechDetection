@@ -107,19 +107,27 @@ AdamW (1e-5 for the pretrained backbones, 1e-4 for the new layers), cosine sched
 
 ## Results
 
-**PROCESS-2, official train/test split.** Healthy controls (0) vs. cognitively impaired, MCI or dementia (1); Cookie Theft recordings only; 400 participants (200 / 200). Participants: 284 train, 36 validation, 80 test. Single run (seed 42) on a Kaggle T4. The checkpoint with the best validation F1 (epoch 11; early stopping at epoch 16) was evaluated once on the test set.
+**PROCESS-2, official train/test split.** Healthy controls (0) vs. cognitively impaired, MCI or dementia (1); Cookie Theft recordings only; 400 participants (200 / 200), 80 of them in the official test set. Five training runs on a Kaggle T4 with seeds 42, 1, 2, 3 and 4. The seed changes weight initialization, batch order and which ~36 training participants are held out for validation; the test set is the same in every run. Each run evaluates its best-validation-F1 checkpoint once on the test set.
 
-| Metric | Test set (80 participants) |
-|---|---|
-| Accuracy | 81.3% |
-| F1 | 0.815 |
-| Precision | 0.805 |
-| Recall | 0.825 |
-| ROC-AUC | 0.919 |
+| Metric | Mean ± std over 5 seeds | Range |
+|---|---|---|
+| Accuracy | 79.0% ± 5.5% | 71.3–83.8% |
+| F1 | 0.816 ± 0.040 | 0.753–0.844 |
+| Precision | 0.737 ± 0.070 | 0.660–0.814 |
+| Recall | 0.920 ± 0.054 | 0.875–1.000 |
+| ROC-AUC | 0.889 ± 0.016 | 0.862–0.903 |
 
-Confusion matrix: 32 true negatives, 8 false positives, 7 false negatives, 33 true positives.
+| Seed | Accuracy | F1 | Precision | Recall | ROC-AUC | Best epoch |
+|---|---|---|---|---|---|---|
+| 42 | 0.838 | 0.843 | 0.814 | 0.875 | 0.899 | 2 |
+| 1 | 0.825 | 0.837 | 0.783 | 0.900 | 0.903 | 3 |
+| 2 | 0.825 | 0.844 | 0.760 | 0.950 | 0.891 | 4 |
+| 3 | 0.713 | 0.753 | 0.660 | 0.875 | 0.862 | 9 |
+| 4 | 0.750 | 0.800 | 0.667 | 1.000 | 0.893 | 6 |
 
-With 80 test participants the 95% confidence interval for accuracy is roughly 71–88%, so differences of a few points between runs are not meaningful. Training accuracy reached ~97% while validation peaked near 80%, so the model overfits after about 10 epochs; early stopping limits this.
+- **ROC-AUC is stable (0.86–0.90) while accuracy varies more (71–84%).** The model ranks participants consistently; most of the variation is in where the default 0.5 decision threshold falls, which depends on the checkpoint chosen with a 36-person validation set.
+- **Recall is consistently higher than precision.** On average the model misses 3.2 of the 40 impaired test participants but flags 13.6 of the 40 healthy ones as impaired.
+- With 80 test participants, a single run's accuracy has a 95% confidence interval of roughly ±9 points, so a spread of this size between seeds is expected.
 
 ---
 
