@@ -43,7 +43,11 @@ class EnhancedFFGModel(nn.Module):
         super().__init__()
         
         # 1. Pre-trained Feature Extractors
-        self.acoustic_model = Wav2Vec2Model.from_pretrained(config.ACOUSTIC_MODEL_NAME)
+        # SpecAugment off: the wav2vec2-base-960h checkpoint has no masked_spec_embed, so recent
+        # transformers versions leave it uninitialized (often NaN), making every training loss NaN
+        self.acoustic_model = Wav2Vec2Model.from_pretrained(
+            config.ACOUSTIC_MODEL_NAME, mask_time_prob=0.0, mask_feature_prob=0.0
+        )
         self.linguistic_model = BertModel.from_pretrained(config.LINGUISTIC_MODEL_NAME)
         
         # Freeze feature extractors initially

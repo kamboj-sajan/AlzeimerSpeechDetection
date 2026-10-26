@@ -85,7 +85,8 @@ def train_one_epoch(model, dataloader, optimizer, scheduler, criterion, device, 
     all_labels = []
     all_probs = []
     use_amp = config.USE_AMP and device.type == "cuda"
-    
+    skipped_batches = 0
+
     for batch in tqdm(dataloader, desc="Training"):
         acoustic_input = batch['acoustic_input_values'].to(device)
         linguistic_ids = batch['linguistic_input_ids'].to(device)
@@ -99,6 +100,10 @@ def train_one_epoch(model, dataloader, optimizer, scheduler, criterion, device, 
             logits = model(acoustic_input, linguistic_ids, linguistic_mask, 
                           prosodic_features, paralinguistic_features)
             loss = criterion(logits, labels)
+        if not torch.isfinite(loss):
+            # Stepping on a NaN loss would write NaN into every trainable weight
+            skipped_batches += 1
+            continue
         scaler.scale(loss).backward()
         if config.GRAD_CLIP_NORM is not None:
             scaler.unscale_(optimizer)
@@ -114,14 +119,18 @@ def train_one_epoch(model, dataloader, optimizer, scheduler, criterion, device, 
         all_labels.extend(labels.cpu().numpy())
         all_probs.extend(torch.softmax(logits, dim=1)[:, 1].detach().cpu().numpy())
     
-    avg_loss = total_loss / len(dataloader)
+    if skipped_batches:
+        print(f"Warning: skipped {skipped_batches}/{len(dataloader)} training batches with a non-finite loss")
+    if skipped_batches == len(dataloader):
+        raise RuntimeError("Every training batch had a non-finite loss; check the input data and model outputs.")
+    avg_loss = total_loss / (len(dataloader) - skipped_batches)
     accuracy = accuracy_score(all_labels, all_preds)
     precision, recall, f1, _ = precision_recall_fscore_support(all_labels, all_preds, average='binary', zero_division=0)
     try:
         auc = roc_auc_score(all_labels, all_probs)
     except ValueError:
         auc = float('nan')
-    
+
     return avg_loss, accuracy, f1, precision, recall, auc
 
 def evaluate(model, dataloader, criterion, device):

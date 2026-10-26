@@ -39,7 +39,10 @@ class FFGModel(nn.Module):
     def __init__(self):
         super().__init__()
         # 1. Feature Extractors
-        self.acoustic_model = Wav2Vec2Model.from_pretrained(config.ACOUSTIC_MODEL_NAME)
+        # SpecAugment off: the checkpoint has no masked_spec_embed, which can load as NaN
+        self.acoustic_model = Wav2Vec2Model.from_pretrained(
+            config.ACOUSTIC_MODEL_NAME, mask_time_prob=0.0, mask_feature_prob=0.0
+        )
         self.linguistic_model = BertModel.from_pretrained(config.LINGUISTIC_MODEL_NAME)
         
         # Freeze feature extractors initially to save memory and speed up training
